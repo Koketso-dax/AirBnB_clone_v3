@@ -1,5 +1,6 @@
+#!/usr/bin/python3
 """Main App module for v1 api."""
-import os
+from os import getenv
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
@@ -16,6 +17,6 @@ def teardown_appcontext(exception):
 
 if __name__ == "__main__":
     """Main loop program"""
-    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
-    port = int(os.getenv('HBNB_API_PORT', 5000))
+    host = getenv('HBNB_API_HOST', '0.0.0.0')
+    port = int(getenv('HBNB_API_PORT', 5000))
     app.run(host=host, port=port, threaded=True)

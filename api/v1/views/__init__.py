@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """View initialization"""
 from flask import Blueprint
 from api.v1.views.index import *

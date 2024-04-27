@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Return OK if api is running with no issue."""
 from api.v1.views import app_views
 from flask import jsonify
