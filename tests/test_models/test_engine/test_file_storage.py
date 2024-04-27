@@ -113,3 +113,42 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_existing_object(self):
+        """Test retrieving an existing object"""
+        user = User(name="Test User")
+        models.storage.new(user)
+        models.storage.save()
+        retrieved_user = models.storage.get(User, user.id)
+        self.assertEqual(user, retrieved_user)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_nonexistent_object(self):
+        """Test retrieving a non-existing object"""
+        retrieved_user = models.storage.get(User, "nonexistent_id")
+        self.assertIsNone(retrieved_user)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_all_objects(self):
+        """Test counting all objects"""
+        initial_count = models.storage.count()
+        user = User(name="Test User")
+        models.storage.new(user)
+        models.storage.save()
+        new_count = models.storage.count()
+        self.assertEqual(initial_count + 1, new_count)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_specific_class(self):
+        """Test counting objects of a specific class"""
+        initial_count = models.storage.count(User)
+        user = User(name="Test User")
+        models.storage.new(user)
+        models.storage.save()
+        new_count = models.storage.count(User)
+        self.assertEqual(initial_count + 1, new_count)
+
+
+if __name__ == '__main__':
+    unittest.main()
