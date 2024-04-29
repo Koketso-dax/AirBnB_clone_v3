@@ -9,16 +9,16 @@ from models.amenity import Amenity
 from flasgger.utils import swag_from
 
 
-@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities', methods=['GET'])
+@app_views.route('/amenities/', methods=['GET'])
 @swag_from('documentation/amenity/get.yml', methods=['GET'])
 def get_all_amenities():
-    """ get amenities by id """
+    """ get all amenities"""
     all_list = [obj.to_dict() for obj in storage.all(Amenity).values()]
     return jsonify(all_list)
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/amenities/<string:amenity_id>', methods=['GET'])
 @swag_from('documentation/amenity/get_id.yml', methods=['GET'])
 def get_amenity(amenity_id):
     """ get amenity by id"""
@@ -28,8 +28,7 @@ def get_amenity(amenity_id):
     return jsonify(amenity.to_dict())
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'])
 @swag_from('documentation/amenity/delete.yml', methods=['DELETE'])
 def del_amenity(amenity_id):
     """ delete amenity by id"""
@@ -41,8 +40,8 @@ def del_amenity(amenity_id):
     return jsonify({})
 
 
-@app_views.route('/amenities/', methods=['POST'],
-                 strict_slashes=False)
+@app_views.route('/amenities/', methods=['POST'])
+@app_views.route('/amenities', methods=['POST'])
 @swag_from('documentation/amenity/post.yml', methods=['POST'])
 def create_obj_amenity():
     """ create new instance """
@@ -56,8 +55,7 @@ def create_obj_amenity():
     return (jsonify(obj.to_dict()), 201)
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['PUT'],
-                 strict_slashes=False)
+@app_views.route('/amenities/<string:amenity_id>', methods=['PUT'])
 @swag_from('documentation/amenity/put.yml', methods=['PUT'])
 def post_amenity(amenity_id):
     """  """

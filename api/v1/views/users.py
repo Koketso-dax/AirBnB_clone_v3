@@ -9,7 +9,7 @@ from models.user import User
 from flasgger.utils import swag_from
 
 
-@app_views.route('/users', methods=['GET'], strict_slashes=False)
+@app_views.route('/users', methods=['GET'])
 @swag_from('documentation/user/get.yml', methods=['GET'])
 def get_all_users():
     """ get users by id"""
@@ -17,8 +17,7 @@ def get_all_users():
     return jsonify(all_list)
 
 
-@app_views.route('/users/<string:user_id>', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/users/<string:user_id>', methods=['GET'])
 @swag_from('documentation/user/get_id.yml', methods=['GET'])
 def get_user(user_id):
     """ get user by id"""
@@ -28,8 +27,7 @@ def get_user(user_id):
     return jsonify(user.to_dict())
 
 
-@app_views.route('/users/<string:user_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/users/<string:user_id>', methods=['DELETE'])
 @swag_from('documentation/user/delete.yml', methods=['DELETE'])
 def del_user(user_id):
     """ delete user by id"""
@@ -41,8 +39,7 @@ def del_user(user_id):
     return jsonify({})
 
 
-@app_views.route('/users/', methods=['POST'],
-                 strict_slashes=False)
+@app_views.route('/users/', methods=['POST'])
 @swag_from('documentation/user/post.yml', methods=['POST'])
 def create_obj_user():
     """ create new instance """
@@ -58,8 +55,7 @@ def create_obj_user():
     return (jsonify(obj.to_dict()), 201)
 
 
-@app_views.route('/users/<string:user_id>', methods=['PUT'],
-                 strict_slashes=False)
+@app_views.route('/users/<string:user_id>', methods=['PUT'])
 @swag_from('documentation/user/put.yml', methods=['PUT'])
 def post_user(user_id):
     """  """

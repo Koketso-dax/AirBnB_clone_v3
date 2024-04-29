@@ -12,7 +12,7 @@ from flasgger.utils import swag_from
 
 
 @app_views.route('/places/<string:place_id>/reviews',
-                 methods=['GET'], strict_slashes=False)
+                 methods=['GET'])
 @swag_from('documentation/reviews/get.yml', methods=['GET'])
 def get_all_reviews(place_id):
     """ get reviews from a spcific place """
@@ -23,8 +23,7 @@ def get_all_reviews(place_id):
     return jsonify(reviews)
 
 
-@app_views.route('/reviews/<string:review_id>', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/reviews/<string:review_id>', methods=['GET'])
 @swag_from('documentation/reviews/get_id.yml', methods=['GET'])
 def get_review(review_id):
     """ get review by id"""
@@ -34,8 +33,7 @@ def get_review(review_id):
     return jsonify(review.to_dict())
 
 
-@app_views.route('/reviews/<string:review_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/reviews/<string:review_id>', methods=['DELETE'])
 @swag_from('documentation/reviews/delete.yml', methods=['DELETE'])
 def del_review(review_id):
     """ delete review by id"""
@@ -47,8 +45,7 @@ def del_review(review_id):
     return jsonify({})
 
 
-@app_views.route('/places/<string:place_id>/reviews', methods=['POST'],
-                 strict_slashes=False)
+@app_views.route('/places/<string:place_id>/reviews', methods=['POST'])
 @swag_from('documentation/reviews/post.yml', methods=['POST'])
 def create_obj_review(place_id):
     """ create new instance """
@@ -71,8 +68,7 @@ def create_obj_review(place_id):
     return (jsonify(obj.to_dict()), 201)
 
 
-@app_views.route('/reviews/<string:review_id>', methods=['PUT'],
-                 strict_slashes=False)
+@app_views.route('/reviews/<string:review_id>', methods=['PUT'])
 @swag_from('documentation/reviews/put.yml', methods=['PUT'])
 def post_review(review_id):
     """ updates by id """
