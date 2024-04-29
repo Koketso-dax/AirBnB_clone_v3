@@ -137,6 +137,3 @@ class TestFileStorage(unittest.TestCase):
         models.storage.save()
         new_count = models.storage.count(User)
         self.assertEqual(initial_count + 1, new_count)
-
-if __name__ == '__main__':
-    unittest.main()
