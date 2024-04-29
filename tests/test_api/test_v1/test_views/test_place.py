@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 '''testing the index route'''
 import unittest
-import pep8
-from os import getenv
-import requests
 import json
 from api.v1.app import *
 from flask import request, jsonify
@@ -63,8 +60,6 @@ class TestPlaces(unittest.TestCase):
                                                city_id=new_city.id,
                                                user_id=new_user.id)),
                           content_type="application/json")
-            # data = json.loads(resp.data.decode('utf-8'))
-            # print(data)
             self.assertEqual(resp.status_code, 201)
 
     def test_delete_place(self):
@@ -128,8 +123,6 @@ class TestPlaces(unittest.TestCase):
             resp = c.put('api/v1/places/{}'.format(new_place.id),
                          data=json.dumps({"name": "Becky's Billards"}),
                          content_type="application/json")
-            # data = json.loads(resp.data.decode('utf-8'))
-            # print(data)
             self.assertEqual(resp.status_code, 200)
 
 

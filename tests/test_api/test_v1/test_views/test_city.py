@@ -1,12 +1,8 @@
 #!/usr/bin/python3
 '''testing the index route'''
 import unittest
-import pep8
-from os import getenv
-import requests
 import json
 from api.v1.app import *
-from flask import request, jsonify
 from models.state import State
 from models.city import City
 from models import storage
@@ -72,8 +68,6 @@ class TestCities(unittest.TestCase):
             resp = c.put('api/v1/cities/{}'.format(new_city.id),
                          data=json.dumps({"name": "Becktropolis"}),
                          content_type="application/json")
-            # data = json.loads(resp.data.decode('utf-8'))
-            # print(data)
             self.assertEqual(resp.status_code, 200)
 
 

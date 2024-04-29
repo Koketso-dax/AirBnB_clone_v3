@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 '''testing the index route'''
 import unittest
-import pep8
 from os import getenv
-import requests
 import json
 from api.v1.app import *
 

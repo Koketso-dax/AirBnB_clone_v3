@@ -3,7 +3,6 @@
 import unittest
 import json
 from api.v1.app import *
-from flask import request, jsonify
 from models.state import State
 from models import storage
 
@@ -54,8 +53,6 @@ class TestStates(unittest.TestCase):
             resp = c.put('api/v1/states/{}'.format(new_state.id),
                          data=json.dumps({"name": "Beckytopia"}),
                          content_type="application/json")
-            # data = json.loads(resp.data.decode('utf-8'))
-            # print(data)
             self.assertEqual(resp.status_code, 200)
 
 
