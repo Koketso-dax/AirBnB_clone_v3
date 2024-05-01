@@ -15,6 +15,7 @@ def list_states():
 
 
 @app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>/', methods=['GET'])
 def get_state(state_id):
     """Retrieves a State object"""
     all_states = storage.all("State").values()
@@ -25,6 +26,7 @@ def get_state(state_id):
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>/', methods=['DELETE'])
 def delete_state(state_id):
     """Deletes a State object"""
     all_states = storage.all("State").values()
@@ -56,6 +58,7 @@ def create_state():
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>/', methods=['PUT'])
 def updates_state(state_id):
     """Updates a State object"""
     all_states = storage.all("State").values()
