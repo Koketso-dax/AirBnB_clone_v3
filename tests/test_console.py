@@ -175,3 +175,7 @@ class test_console(unittest.TestCase):
         console.onecmd("create State name=California")
         result = storage.all("State")
         self.assertTrue(len(result) > 0)
+
+
+if __name__ == '__main__':
+    unittest.main()
