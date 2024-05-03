@@ -4,7 +4,6 @@ Contains the class TestConsoleDocs
 """
 
 import console
-import inspect
 import pep8
 import unittest
 import sys
@@ -12,8 +11,7 @@ from os import getenv
 from io import StringIO
 from models import storage
 HBNBCommand = console.HBNBCommand
-db = getenv("HBNB_TYPE_STORAGE", "fs")
-
+db = getenv("HBNB_TYPE_STORAGE")
 
 class TestConsoleDocs(unittest.TestCase):
     """Class for testing documentation of the console"""
@@ -177,7 +175,3 @@ class test_console(unittest.TestCase):
         console.onecmd("create State name=California")
         result = storage.all("State")
         self.assertTrue(len(result) > 0)
-
-
-if __name__ == '__main__':
-    unittest.main()
