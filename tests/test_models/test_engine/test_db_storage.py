@@ -91,7 +91,7 @@ class TestFileStorage(unittest.TestCase):
         models.storage.new(user)
         models.storage.save()
         retrieved_user = models.storage.get(User, user.id)
-        self.assertIsNotNone(retrieved_user)
+        self.assertEqual(retrieved_user)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
