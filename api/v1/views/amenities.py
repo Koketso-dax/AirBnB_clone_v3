@@ -45,8 +45,10 @@ def del_amenity(amenity_id):
 @swag_from('documentation/amenity/post.yml', methods=['POST'])
 def create_obj_amenity():
     """ create new instance """
-    if not request.get_json():
+
+    if request.content_type != 'application/json':
         return make_response(jsonify({"error": "Not a JSON"}), 400)
+
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
     js = request.get_json()
@@ -59,7 +61,7 @@ def create_obj_amenity():
 @swag_from('documentation/amenity/put.yml', methods=['PUT'])
 def post_amenity(amenity_id):
     """  """
-    if not request.get_json():
+    if request.content_type != 'application/json':
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     obj = storage.get(Amenity, amenity_id)
     if obj is None:
