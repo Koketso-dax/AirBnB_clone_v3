@@ -26,7 +26,7 @@ def get_place_amenities(place_id):
             if amenity:
                 amenities.append(amenity.to_dict())
 
-    return jsonify(amenities)
+    return jsonify(amenities), 200
 
 
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
