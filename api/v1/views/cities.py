@@ -70,15 +70,14 @@ def create_obj_city(state_id):
 @swag_from('documentation/city/put.yml', methods=['PUT'])
 def put_city(city_id):
     """ Ammend a city object using state id"""
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
 
     obj = storage.get(City, city_id)
+
     if obj is None:
         abort(404)
 
     if obj and request.content_type != 'application/json':
-        abort(400)
+        abort(400, description="Not a JSON")
 
     for key, value in request.get_json().items():
         if key not in ['id', 'state_id', 'created_at', 'updated_at']:
