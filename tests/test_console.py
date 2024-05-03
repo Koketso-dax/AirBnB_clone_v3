@@ -13,6 +13,7 @@ from models import storage
 HBNBCommand = console.HBNBCommand
 db = getenv("HBNB_TYPE_STORAGE")
 
+
 class TestConsoleDocs(unittest.TestCase):
     """Class for testing documentation of the console"""
     def test_pep8_conformance_console(self):

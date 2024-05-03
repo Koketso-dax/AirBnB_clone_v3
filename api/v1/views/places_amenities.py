@@ -13,10 +13,10 @@ from flasgger.utils import swag_from
 def get_place_amenities(place_id):
     """Retrieves the list of all Amenity objects of a Place"""
     place = storage.get(Place, place_id)
-    
+
     if place is None:
         abort(404)
-    
+
     if storage.__class__.__name__ == "DBStorage":
         amenities = [amenity.to_dict() for amenity in place.amenities]
     else:

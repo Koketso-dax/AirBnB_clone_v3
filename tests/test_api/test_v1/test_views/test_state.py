@@ -84,7 +84,8 @@ class TestStates(unittest.TestCase):
 
     def test_update_state_invalid_json(self):
         """Test updating with invalid json."""
-        response = self.app.put(f'/api/v1/states/{self.state.id}', data='invalid_json')
+        response = self.app.put(f'/api/v1/states/{self.state.id}',
+                                data='invalid_json')
         self.assertEqual(response.status_code, 400)
 
 
