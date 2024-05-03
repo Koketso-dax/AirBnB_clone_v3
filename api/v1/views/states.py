@@ -56,6 +56,9 @@ def post_state():
     """
     Creates a State
     """
+    if request.content_type != 'application/json':
+        abort(400, description="Not a JSON")
+
     if not request.get_json():
         abort(400, description="Not a JSON")
 
