@@ -10,74 +10,50 @@ from flasgger.utils import swag_from
 
 
 @app_views.route('/places/<string:place_id>/amenities', methods=['GET'])
-@app_views.route('/places/<place_id>/amenities/', methods=['GET'])
 @swag_from('documentation/place_amenity/get_id.yml', methods=['GET'])
-def list_amenities_of_place(place_id):
-        ''' Retrieves a list of all Amenity objects of a Place '''
-        all_places = storage.all("Place").values()
-        place_obj = [obj.to_dict() for obj in all_places if obj.id == place_id]
-        if place_obj == []:
-            abort(404)
-        list_amenities = []
-        for obj in all_places:
-            if obj.id == place_id:
-                for amenity in obj.amenities:
-                    list_amenities.append(amenity.to_dict())
-        return jsonify(list_amenities)
+def get_place_amenities(place_id):
+    """ Retrieves the list of all Amenity objects of a Place """
+    place = storage.get(Place, place_id)
+    if not place:
+        abort(404)
+
+    amenities = [amenity.to_dict() for amenity in place.amenities]
+    return jsonify(amenities)
 
 
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  methods=['DELETE'])
 @swag_from('documentation/place_amenity/delete.yml', methods=['DELETE'])
-def delete_amenity(place_id, amenity_id):
-    """ delete amenity from place """
+def delete_place_amenity(place_id, amenity_id):
+    """ Deletes an Amenity object from a Place """
     place = storage.get(Place, place_id)
-    if place is None:
-        abort(404)
     amenity = storage.get(Amenity, amenity_id)
-    if amenity is None:
+
+    if not place or not amenity:
         abort(404)
+
     if amenity not in place.amenities:
         abort(404)
+
     place.amenities.remove(amenity)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  methods=['POST'])
 @swag_from('documentation/place_amenity/post.yml', methods=['POST'])
-def create_place_amenity(place_id, amenity_id):
-        '''Creates a Amenity'''
-        all_places = storage.all("Place").values()
-        place_obj = [obj.to_dict() for obj in all_places if obj.id == place_id]
-        if place_obj == []:
-            abort(404)
+def link_amenity_to_place(place_id, amenity_id):
+    """ Links an Amenity object to a Place """
+    place = storage.get(Place, place_id)
+    amenity = storage.get(Amenity, amenity_id)
 
-        all_amenities = storage.all("Amenity").values()
-        amenity_obj = [obj.to_dict() for obj in all_amenities
-                       if obj.id == amenity_id]
-        if amenity_obj == []:
-            abort(404)
-
-        amenities = []
-        for place in all_places:
-            if place.id == place_id:
-                for amenity in all_amenities:
-                    if amenity.id == amenity_id:
-                        place.amenities.append(amenity)
-                        storage.save()
-                        amenities.append(amenity.to_dict())
-                        return jsonify(amenities[0]), 200
-        return jsonify(amenities[0]), 201
-
-
-@app_views.route('/amenities/<amenity_id>', methods=['GET'])
-def get_place_amenity(amenity_id):
-    '''Retrieves a Amenity object '''
-    all_amenities = storage.all("Amenity").values()
-    amenity_obj = [obj.to_dict() for obj in all_amenities
-                   if obj.id == amenity_id]
-    if amenity_obj == []:
+    if not place or not amenity:
         abort(404)
-    return jsonify(amenity_obj[0])
+
+    if amenity in place.amenities:
+        return jsonify(amenity.to_dict()), 200
+
+    place.amenities.append(amenity)
+    storage.save()
+    return jsonify(amenity.to_dict()), 201
