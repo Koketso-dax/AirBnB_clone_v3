@@ -85,6 +85,9 @@ def put_state(state_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
 
+    if request.content_type != 'application/json':
+        abort(400, description='Not a JSON')
+
     ignore = ['id', 'created_at', 'updated_at']
 
     data = request.get_json()
