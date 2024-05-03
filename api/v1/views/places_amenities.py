@@ -6,21 +6,18 @@ from models import storage
 from models.amenity import Amenity
 from models.place import Place
 from flasgger.utils import swag_from
-from os import getenv
-
-
-STORAGE_TYPE = getenv('HBNB_TYPE_STORAGE')
 
 
 @app_views.route('/places/<string:place_id>/amenities', methods=['GET'])
 @swag_from('documentation/place_amenity/get_id.yml', methods=['GET'])
 def get_place_amenities(place_id):
-    """ Retrieves the list of all Amenity objects of a Place """
+    """Retrieves the list of all Amenity objects of a Place"""
     place = storage.get(Place, place_id)
-    if not place:
+    
+    if place is None:
         abort(404)
-
-    if STORAGE_TYPE == 'db':
+    
+    if storage.__class__.__name__ == "DBStorage":
         amenities = [amenity.to_dict() for amenity in place.amenities]
     else:
         amenities = []
@@ -28,6 +25,7 @@ def get_place_amenities(place_id):
             amenity = storage.get(Amenity, amenity_id)
             if amenity:
                 amenities.append(amenity.to_dict())
+
     return jsonify(amenities)
 
 
